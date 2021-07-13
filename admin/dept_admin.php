@@ -5,8 +5,16 @@
   if(empty($_SESSION['email'])){
     echo "<script>alert('Session Expired!!!'); window.location.href = '../index.php';</script>"; 
   }else{
+
+    $_SESSION['master_admin'] = "demo@pict.edu";
+
+     $email = $_SESSION['email'];
+
+    if($email == $_SESSION['master_admin']){
+      echo "<script> window.location.href='master_admin.php';</script>";
+    }
     
-    $email = $_SESSION['email'];
+   
 
       $sql = "SELECT dept FROM admin WHERE email = '$email'";
       $result = $conn->query($sql);

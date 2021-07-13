@@ -29,7 +29,7 @@
 
     if($isAdmin == False and $isFaculty == False){
         echo "<script> alert('You are not Authorized Person. Please contact Department admin.'); window.location.href='index.php';</script>";
-    }elseif($isAdmin){
+    }elseif($isAdmin and !$isFaculty){
         
         $_SESSION['master_admin'] = "demo@pict.edu";
 
@@ -38,7 +38,7 @@
         }else{
             echo "<script> window.location.href='admin/dept_admin.php';</script>";
         }
-    }elseif($isFaculty){
+    }elseif($isFaculty and !$isAdmin){
         echo "<script> window.location.href='facultyPage/index.php';</script>";
     }
 
