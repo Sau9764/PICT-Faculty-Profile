@@ -1,0 +1,261 @@
+body, html {
+    font-size: 15px;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-attachment: fixed; 
+    background-size: 100% 100%; 
+    background-repeat: no-repeat;
+    position: relative;
+    cursor:default;
+    scroll-behavior: smooth;
+}
+.bg-image { 
+    background-image: url("../images/bg7.jpg");
+    background-color: rgba(11, 60, 93, 0.5);
+    background-blend-mode: color-burn;
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    height: 100%; 
+    width:100%;
+    z-index:-1;
+    position:absolute;
+    transform:scale(1);
+    background-attachment: fixed;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navbar{
+    border-radius: 1px;
+    margin-right: 0px;
+    padding:5px;
+    width:100%;
+    min-height: 9vh;
+    border-radius:1.5px;
+    background-color: rgba(11, 60, 93, 1);
+    transition:0.7s;
+    position: relative;
+}
+
+.nav-item{
+    padding-left:10px;
+    padding-right: 8px;
+    height:100%;
+}
+
+.news{
+   font-size: 1em;
+   text-underline-position:none;
+    color:black;
+    font-size: 1.05rem;
+}
+
+.news:hover{
+    text-decoration: none;
+}
+
+.lower{
+    background: url('../images/blur_profile1.jpg') no-repeat;
+    background-size:cover;
+    background-color: rgba(255,255,255,0.1);
+    background-blend-mode: color-burn;
+    opacity:1;
+    margin:0px;
+}
+
+.header{
+    text-align: left;
+    font-style: bold;
+    font-size:1.2rem  !important;
+    background-color: #0B3C5D; 
+    padding-top:12px;
+    border-radius:8px;
+    color: white;
+}
+.childCard{
+    background-color:rgba(255,255,255,0.85);
+    color:black;
+    border:0px;
+    border-radius: 103azzWW%px;
+    height:auto;
+    transition:0.8s;
+}
+
+.childCard:hover{
+    transition:0.5s;
+    background-color:rgba(255,255,255,0.95);
+}
+
+hr{
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+    background-color: #e1f5fe;
+}
+
+.card{
+    transition: .5s;
+    
+    &::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: opacity 2s cubic-bezier(.165, .84, .44, 1);
+      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .15);
+      content: '';
+      opacity: 0;
+      z-index: -1;
+    } 
+}
+
+.card:hover{
+    transition:0.5s;
+    transform: scale3d(1.006, 1.006, 1);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .15);
+    &::after {
+        opacity: 1;
+      }
+}
+
+@bg: #2d2d37; // Dark blue
+@primary: #fd6b21; // Orange
+
+.arrow {
+  text-align: center;
+  margin: 8% 0;
+}
+.bounce {
+  -moz-animation: bounce 2s infinite;
+  -webkit-animation: bounce 2s infinite;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+.footer {
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #0b3c5d;
+   color: white;
+   text-align: center;
+   height: 50px;
+}
+
+.footer-text {
+  padding-top : 10px; 
+}
+
+.dev_page {
+  color: white;
+  text-decoration: none;
+}
+
+.dev_page:hover {
+  color: #bbcbff;
+  text-decoration: none;
+}
+
+.dev_page:active {
+  color: #bbcbff;
+  text-decoration: none;
+}
+
+.dept_hod {
+  width: 90%;
+}
+
+.dept_hod .col-md-3 {
+  width: 100%;
+}
+
+.header-left {
+  width: 20px;
+  height: 100%;
+  background-color: #0B3C5D; 
+  display: inline-block;
+  position: absolute;
+}
+
+.dept_view {
+  width: 100%;
+}
+
+.Facultytable {
+  color: black;
+  width: 100%;
+  margin-top: 20px;
+  overflow-x:auto;
+}
+
+.search-result {
+  color: white;
+  padding: 3px;
+  text-decoration: none;
+}
+
+.search-result:hover {
+  color: #ddd;
+  text-decoration: none;
+  padding: 3px;
+}
+
+.search-result:active {
+  color: #ddd;
+  text-decoration: none;
+  padding: 3px;
+}
+
+.search-res-hr {
+  margin : 0px;
+  padding: 0px;
+}
+
+.livesearch {
+  position: absolute;
+  float: right;
+  margin-right: 10px;
+  max-height: 40vh;
+  overflow: auto;
+  margin-left: 82vw;
+  z-index: 10;
+}
+
+/*Scrollbar Style*/
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
