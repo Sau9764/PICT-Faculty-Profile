@@ -4,9 +4,8 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        
         <h3 class="modal-title">Remove Content</h3>
-        <p style="color: red;">(* indicates the field is mandatory)</p>
       </div>
 
       <div class="modal-body">

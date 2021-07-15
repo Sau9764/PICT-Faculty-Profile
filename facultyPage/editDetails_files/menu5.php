@@ -2,7 +2,7 @@
 	<div class="card mycard" id="books" style="margin-bottom: 10px;">
 		<div class="card-header" align="center">
 			<h2>Books Details
-				<span><button class="personalclick btn btn-primary ml-2" data-toggle="modal" data-target="#add_books_model" style=";float: right;" onclick="editpersonal()">Add Book</button></span>
+				<span><button class="personalclick btn btn-primary ml-2" data-toggle="modal" data-target="#add_books_model" style=";float: right;" >Add Book</button></span>
 			</h2>
 		</div>
 

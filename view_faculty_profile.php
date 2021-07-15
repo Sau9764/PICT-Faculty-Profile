@@ -68,6 +68,8 @@
         <script src="js/aos.js"></script>
         <script src="js/platform.js" async defer></script>
 
+        
+
         <!-- <link rel="stylesheet" href="admin/editDetails_files/editDetails_css.css" > -->
         <script type="text/javascript" src="admin/editDetails_files/editDetails_js.js"></script>
 

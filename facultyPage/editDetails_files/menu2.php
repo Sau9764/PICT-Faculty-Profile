@@ -2,7 +2,7 @@
 	<div id="qualifications" class="card mycard">
 		<div class="card-header" align="center">
 			<h2>Qualifications
-				<span><button class="personalclick btn btn-primary ml-2" data-toggle="modal" data-target="#AddQualiModel" style="float: right;" onclick="editpersonal()">Add Qualification</button></span>
+				<span><button class="personalclick btn btn-primary ml-2" data-toggle="modal" data-target="#AddQualiModel" style="float: right;">Add Qualification</button></span>
 				
 			</h2>
 		</div>

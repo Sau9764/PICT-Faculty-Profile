@@ -6,7 +6,7 @@
 
 
 	$eid=$_SESSION['email'];
-
+	$eid_eid = "";
 
 
 	$sql = "SELECT * FROM faculty WHERE email = '$eid'";
@@ -37,13 +37,12 @@
 	// Menu 0
 	if(isset($_POST['picsubmit'])){
 
-		// $eid = $row["eid"];
-
 		define('ROOT_PATH', dirname(__DIR__) . "/facultyPage/req_ImgCv/");
 		$target_dir = ROOT_PATH.'facultyImages/';
 		$name = pathinfo($_FILES['imageToUpload']['name']);
 		$ext = $name['extension'];
 		$dbpath = $eid.'.'.$ext;
+		
 		if($ext == 'png'){
 			$target_file = $target_dir.$eid.'.png';
 		}else if($ext == 'jpg'){
@@ -51,34 +50,54 @@
 		}else{
 			$target_file = $target_dir.$eid.'.jpeg';
 		}
+
+		$sequery="select image from tfaculty where eid='$eid_eid'";
+
+		$result = $conn->query($sequery);
+
+		define('delete_path', dirname(__DIR__) . "/facultyPage/");
+
+		if ($result->num_rows > 0) {
+
+			while ($row = $result->fetch_assoc()) {
+
+				$delete_target = delete_path.''.$row['image'];
+            
+	            if(file_exists($delete_target)){
+					unlink($delete_target);
+				}
+            }
+			
+		}
+
+		
+
 		if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], $target_file)) {
 
-			$sequery="select * from tfaculty where email='$eid'";
+			$sequery="select * from tfaculty where eid='$eid_eid'";
 
 			$result = $conn->query($sequery);
 
 			if ($result->num_rows > 0) 
 			{
 				
-				$query = "UPDATE tfaculty SET image = 'req_ImgCv/facultyImages/$dbpath' WHERE eid = '$eid'";
+				$query = "UPDATE tfaculty SET image = 'req_ImgCv/facultyImages/$dbpath' WHERE eid = '$eid_eid'";
 
 			}
 			else
 			{
-				$query="INSERT INTO tfaculty (eid,image) VALUES ('$eid','req_ImgCv/facultyImages/$dbpath')";
+				$query="INSERT INTO tfaculty (eid,image) VALUES ('$eid_eid','req_ImgCv/facultyImages/$dbpath')";
 				
 			}
 
-			
-			
 			if($conn->query($query)){
 		        echo "<script>
 					alert('Data updated successfully!!');				
-					window.location.href = 'index.php?eid=".$eid."';
+					window.location.href = 'index.php?eid=".$eid_eid."';
 				</script>";
 	        }
 	    } else {
-	        echo "<script>alert('Error uploading file!')";
+	        echo "<script>alert('Error uploading file!') </script>";
 	    }
 	}
 
@@ -94,29 +113,16 @@
 		$designation = $row['designation'];
 		$responsibility = $row['responsibility'];
 		
-		$pddoj = $_POST['pddoj'];
-		$pdname = $_POST['pdname'];
+		
 		$pdphone = $_POST['pdphone'];
-		$pddept = $_POST['pddept'];
-		$pddesg = $_POST['pddesg'];
+		
 		$pdresp = $_POST['pdresp'];
 		$change = 0;
 
-		// $namefull = $pdname;
-		// if($pdname!=""){
-		// 	$sql = "UPDATE tfaculty SET fullname = '$namefull' WHERE eid='$eid'";
-		// 	$query = $conn->query($sql);
-		// 	if($query){
-		// 		$change = 1;
-		// 	}
-		// 	else{
-		// 		$change = 0;
-		// 	}
-		// }
 
 		if($pdphone!=""){
 			//$sql="insert into tfaculty (contact) VALUES ('$pdphone')";
-			$sql = "UPDATE tfaculty SET contact = '$pdphone' WHERE eid='$eid'";
+			$sql = "UPDATE tfaculty SET contact = '$pdphone' WHERE eid='$eid_eid'";
 			$query = $conn->query($sql);
 			if($query){
 				$change = 1;
@@ -125,28 +131,9 @@
 				$change = 0;
 			}
 		}
-		if($pddept!=""){
-			$sql = "UPDATE tfaculty SET department = '$pddept' WHERE eid='$eid'";		
-			$query = $conn->query($sql);
-			if($query){
-				$change = 1;
-			}
-			else{
-				$change = 0;
-			}
-		}
-		// if($pddesg!=""){
-		// 	$sql = "UPDATE tfaculty SET designation = '$pddesg' WHERE eid='$eid'";
-		// 	$query = $conn->query($sql);
-		// 	if($query){
-		// 		$change = 1;
-		// 	}
-		// 	else{
-		// 		$change = 0;
-		// 	}
-		// }	
+		
 		if($pdresp!=""){
-			$sql = "UPDATE tfaculty SET responsibility = '$pdresp' WHERE eid='$eid'";
+			$sql = "UPDATE tfaculty SET responsibility = '$pdresp' WHERE eid='$eid_eid'";
 			$query = $conn->query($sql);
 			if($query){
 				$change = 1;
@@ -155,28 +142,19 @@
 				$change = 0;
 			}
 		}
-		// if($pddoj!=""){
-		// 	$sql = "UPDATE tfaculty SET doj = '$pddoj' WHERE eid='$eid'";
-		// 	$query = $conn->query($sql);
-		// 	if($query){
-		// 		$change = 1;
-		// 	}
-		// 	else{
-		// 		$change = 0;
-		// 	}
-		// }
+		
 		if($change == 1){
 			echo 
 			"<script>
 				alert('Data updated successfully!!');		
-				window.location.href = 'index.php?eid=".$eid."';
+				window.location.href = 'index.php?eid=".$eid_eid."';
 			</script>";
 		}
 		else{
 			echo 
 			"<script>
 				alert('Error in data updation!!');				
-				window.location.href = 'index.php?eid=".$eid."';
+				window.location.href = 'index.php?eid=".$eid_eid."';
 			</script>";
 		}	
 	}
@@ -191,12 +169,12 @@
 		$college = $_POST['college'];
 		$year = $_POST["year"];
 
-		$query = "INSERT INTO `tqualifications`(`eid`, `level`, `degree`, `specialization`, `uname`, `college`, `year`,`email`,`fullname`) VALUES ('$eid_eid','$level','$degree','$specialization','$nou','$college','$year','$eid','$fullname')";
+		$query = "INSERT INTO `qualifications`(`eid`, `level`, `degree`, `specialization`, `uname`, `college`, `year`) VALUES ('$eid_eid','$level','$degree','$specialization','$nou','$college','$year')";
 		$result = $conn->query($query);
 		if ($result) {
-			echo '<script type="text/javascript">alert("Data Added Successfully!"); window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript">alert("Data Added Successfully!"); window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}else{
-			echo '<script type="text/javascript">alert("Error while Adding details."); window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript">alert("Error while Adding details."); window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}
 	}
 
@@ -218,23 +196,23 @@
 		$change = 0;
 
 
-		$sql = "SELECT * FROM faculty WHERE email = '$eid'";
+		$sql = "SELECT * FROM faculty WHERE eid = '$eid_eid'";
     	$result = $conn->query($sql);
 
     	if($result->num_rows<=0)
     	{
-    		$sql="INSERT INTO tfaculty(texperience,iexperience,aoi,other) VALUES ('$texperience','$iexperience','$aoi','other') ";
+    		$sql="INSERT INTO tfaculty(eid,texperience,iexperience,aoi,other) VALUES ('e$id_eid','$texperience','$iexperience','$aoi','other') ";
 
     		if($conn->query($query)){
 		        echo "<script>alert('Experience uploaded!!');
-	        		window.location.href = 'index.php?eid=".$eid."';</script>";
+	        		window.location.href = 'index.php?eid=".$eid_eid."';</script>";
 	        }
    		}
    		else
    		{
 
    			if($exaoi!=""){
-			$sql = "UPDATE tfaculty SET aoi = '$exaoi' WHERE eid='$eid'";		
+			$sql = "UPDATE tfaculty SET aoi = '$exaoi' WHERE eid='$eid_eid'";		
 			$query = $conn->query($sql);
 			if($query){
 				$change = 1;
@@ -244,7 +222,7 @@
 			}		//add
 		}
 		if($extexperience!=""){
-			$sql = "UPDATE tfaculty SET texperience = '$extexperience' WHERE eid='$eid'";		
+			$sql = "UPDATE tfaculty SET texperience = '$extexperience' WHERE eid='$eid_eid'";		
 			$query = $conn->query($sql);
 			if($query){
 				$change = 1;
@@ -255,7 +233,7 @@
 			//add
 		}
 		if($exiexperience!=""){
-			$sql = "UPDATE tfaculty SET iexperience = '$exiexperience' WHERE eid='$eid'";
+			$sql = "UPDATE tfaculty SET iexperience = '$exiexperience' WHERE eid='$eid_eid'";
 			$query = $conn->query($sql);
 			if($query){
 				$change = 1;
@@ -269,14 +247,14 @@
 			echo 
 			"<script>
 				alert('Data updated successfully!!');		
-				window.location.href = 'index.php?eid=".$eid."';
+				window.location.href = 'index.php?eid=".$eid_eid."';
 			</script>";
 		}
 		else{
 			echo 
 			"<script>
 				alert('Error in data updation!!');				
-				window.location.href = 'index.php?eid=".$eid."';
+				window.location.href = 'index.php?eid=".$eid_eid."';
 			</script>";
 		}
    	}
@@ -296,12 +274,12 @@
 		$year = $_POST['year'];
 		$details = $_POST['details'];
 
-		$query = "INSERT INTO `tjournals`(`eid`,`title`,`type`,`year`,`description`,`email`,`fullname`) VALUES ('$eid','$journaltitle','$journaltype','$year','$details','$eid','$fullname')";
+		$query = "INSERT INTO `journals`(`eid`,`title`,`type`,`year`,`description`) VALUES ('$eid_eid','$journaltitle','$journaltype','$year','$details')";
 		$result = $conn->query($query);
 		if ($result) {
-			echo '<script type="text/javascript"> alert("Data Submitted Successfully!"); window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript"> alert("Data Submitted Successfully!"); window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}else{
-			echo '<script type="text/javascript">alert("Error while Adding details."); window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript">alert("Error while Adding details."); window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}
 	}
 
@@ -312,12 +290,12 @@
 		$year = $_POST['year'];
 		$details = $_POST['details'];
 
-		$query = "INSERT INTO `tbooks` (`eid`,`bname`,`publication`,`year`,`description`,`email`,`fullname`) VALUES('$eid_eid','$bookname','$publication','$year','$details','$eid','$fullname')";
+		$query = "INSERT INTO `books` (`eid`,`bname`,`publication`,`year`,`description`) VALUES('$eid_eid','$bookname','$publication','$year','$details')";
 		$result = $conn->query($query);
 		if ($result) {
-			echo '<script type="text/javascript">alert("Data Submitted Successfully!");window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript">alert("Data Submitted Successfully!");window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}else{
-			echo '<script type="text/javascript">alert("Error while Adding details.");window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript">alert("Error while Adding details.");window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}
 	}
 
@@ -331,12 +309,12 @@
 		$year = $_POST['year'];
 		$webaddress = $_POST['webaddress'];	
 
-		$query = "INSERT INTO `tpatent`(`eid`,`ptitle`,`year`,`country`,`assignee`,`patentno`,`pagenos`,`webadd`,`email`,`fullname`) VALUES('$eid_eid','$patenttitle','$year','$country','$assignee','$patentnumber','$pagenos','$webaddress','$eid','$fullname')";
+		$query = "INSERT INTO `patent`(`eid`,`ptitle`,`year`,`country`,`assignee`,`patentno`,`pagenos`,`webadd`) VALUES('$eid_eid','$patenttitle','$year','$country','$assignee','$patentnumber','$pagenos','$webaddress')";
 		$result = $conn->query($query);
 		if ($result) {
-			echo '<script type="text/javascript">alert("Data Submitted Successfully!");window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript">alert("Data Submitted Successfully!");window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}else{
-			echo '<script type="text/javascript">alert("Error while Adding details.");window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript">alert("Error while Adding details.");window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}
 	}
 
@@ -349,18 +327,19 @@
 		$year = $_POST['year'];
 		$details = $_POST['details'];
 
-		$query = "INSERT INTO `tconferences`(`eid`,`ctitle`,`ctype`,`year`,`cdetails`,`email`,`fullname`) VALUES('$eid_eid','$conferencetitle','$conferencetype','$year','$details','$eid','$fullname')";
-		//$sql = "INSERT INTO Temp VALUES('$eid','','-','Conferences','$query')";
+		$query = "INSERT INTO `conferences`(`eid`,`ctitle`,`ctype`,`year`,`cdetails`) VALUES('$eid_eid','$conferencetitle','$conferencetype','$year','$details')";
+		
 		$result = $conn->query($query);
 		if ($result) {
-			echo '<script type="text/javascript">alert("Data Submitted Successfully!");window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript">alert("Data Submitted Successfully!");window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}else{
-			echo '<script type="text/javascript">alert("Error while Adding details.");window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript">alert("Error while Adding details.");window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}
 	}
 
 	// menu 8
 	if(isset($_POST['submitFundedrp'])){
+		
 		$title = $_POST['title'];
 		$picoi = $_POST['picoi'];
 		$duration  =$_POST['duration'];
@@ -368,12 +347,12 @@
 		$fagency = $_POST['fagency'];
 		$remark = $_POST['remark'];
 
-		$query = "INSERT INTO `tfundedrp`(`eid`,`ptitle`,`picoi`,`duration`,`famount`,`fegency`,`remark`,`email`,`fullname`) VALUES('$eid_eid','$title','$picoi','$duration','$famount','$fagency','$remark','$eid','$fullname')";
+		$query = "INSERT INTO `fundedrp`(`eid`,`ptitle`,`picoi`,`duration`,`famount`,`fegency`,`remark`) VALUES('$eid_eid','$title','$picoi','$duration','$famount','$fagency','$remark')";
 		$result = $conn->query($query);
 		if ($result) {
-			echo '<script type="text/javascript">alert("Data Submitted Successfully!");window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript">alert("Data Submitted Successfully!");window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}else{
-			echo '<script type="text/javascript">alert("Error while Adding details.");window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript">alert("Error while Adding details.");window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}
 	}
 
@@ -387,35 +366,71 @@
 		$status = $_POST['status'];
 		$details = $_POST['details'];
 
-		$query = "INSERT INTO `tconsultancy`(`eid`,`ioiu`,`sdate`,`edate`,`duration`,`amount`,`status`,`details`) VALUES('$eid','$ioiu','$sdate','$edate','$duration','$areceived','$status','$details')";
+		$query = "INSERT INTO `consultancy`(`eid`,`ioiu`,`sdate`,`edate`,`duration`,`amount`,`status`,`details`) VALUES('$eid_eid','$ioiu','$sdate','$edate','$duration','$areceived','$status','$details')";
 		$result = $conn->query($query);
 		if ($result) {
-			echo '<script type="text/javascript">alert("Data Submitted Successfully!");window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript">alert("Data Submitted Successfully!");window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}else{
-			echo '<script type="text/javascript">alert("Error while Adding details.");window.location.href="index.php?eid='.$eid.'";</script>';
+			echo '<script type="text/javascript">alert("Error while Adding details.");window.location.href="index.php?eid='.$eid_eid.'";</script>';
 		}
 	}
 
 	// menu 10
 	if(isset($_POST['ccvsubmit'])){
 
-		define('ROOT_PATH', dirname(__DIR__) . "/facultyPage/");
-		$target_dir = ROOT_PATH.'facultyCV/';
+		define('ROOT_PATH_cv', dirname(__DIR__) . "/facultyPage/req_ImgCv/");
+		$target_dir = ROOT_PATH_cv.'facultyCv/';
 		$name = pathinfo($_FILES['fileToUpload']['name']);
 		$ext = $name['extension'];
 		$dbpath = $eid.'.'.$ext;
 		$target_file = $target_dir.$eid.'.'.$ext;
+
+		$sequery="select cv from tfaculty where eid='$eid_eid'";
+
+		$result = $conn->query($sequery);
+
+		define('delete_path_cv', dirname(__DIR__) . "/facultyPage/");
+
+		if ($result->num_rows > 0) {
+
+			while ($row = $result->fetch_assoc()) {
+
+				$delete_target = delete_path_cv.''.$row['cv'];
+            
+	            if(file_exists($delete_target)){
+					unlink($delete_target);
+				}
+            }
+			
+		}
 			
 		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 
-			$query = "UPDATE tfaculty SET cv = 'req_ImgCv/facultyCV/$dbpath' WHERE eid = '$eid'";
+			$sequery="select * from tfaculty where eid='$eid_eid'";
+
+			$result = $conn->query($sequery);
+
+			if ($result->num_rows > 0) {
+				
+				$query = "UPDATE tfaculty SET cv = 'req_ImgCv/facultyCv/$dbpath' WHERE eid = '$eid_eid'";
+
+			}
+			else
+			{
+				$query="INSERT INTO tfaculty (eid,cv) VALUES ('$eid_eid','req_ImgCv/facultyCv/$dbpath')";
+				
+			}
+
+
 			if($conn->query($query)){
-		        echo "<script>alert('File successfully uploaded!! [".$target_file."]');
-	        		window.location.href = 'index.php?eid='".$eid."';</script>";
-	    	}
+		        echo "<script>
+					alert('File updated successfully!!');				
+					window.location.href = 'index.php?eid=".$eid_eid."';
+				</script>";
+	        }
 	    } else {
 	        echo "<script>alert('Error uploading file');
-	               window.location.href = 'index.php?eid='".$eid."';</script> ";
+	               window.location.href = 'index.php?eid='".$eid_eid."';</script> ";
 	    }
 	}
 
@@ -423,7 +438,28 @@
 
 		$content_id =  $_POST['content_id'];
 
-		$sql = "DELETE FROM post WHERE id= '$content_id'";
+		$sql = "DELETE FROM post WHERE id= '$content_id' and eid = '$eid_eid'";
+
+		$sequery="select pdf from post where id='$content_id' and eid = '$eid_eid'";
+
+		$result = $conn->query($sequery);
+
+		define('delete_path_content', dirname(__DIR__) . "/facultyPage/");
+
+		if ($result->num_rows > 0) {
+
+			while ($row = $result->fetch_assoc()) {
+
+				$delete_target = delete_path_content.''.$row['pdf'];
+            
+	            if(file_exists($delete_target)){
+					unlink($delete_target);
+				}
+            }
+			
+		}else{
+			echo '<script type="text/javascript">alert("File not found.");window.location.href="index.php";</script>';
+		}
 
 		if ($conn->query($sql) === TRUE) {
 		  echo '<script type="text/javascript">alert("Data Deleted Successfully!");window.location.href="index.php";</script>';
@@ -438,19 +474,33 @@
 		$oddetails = $_POST['odother'];
 
 		if($oddetails!=""){
-			$sql = "UPDATE tfaculty SET other = '$oddetails' WHERE eid='$eid'";
-			$query = $conn->query($sql);
-			if($query){
-				echo 
-				"<script>
-					alert('Data updated successfully!!');		
-					window.location.href = 'index.php?eid=".$eid."';
+
+			$sequery="select * from tfaculty where eid='$eid_eid'";
+
+			$result = $conn->query($sequery);
+
+			if ($result->num_rows > 0) {
+				
+				$query = "UPDATE tfaculty SET other = '$oddetails' WHERE eid='$eid_eid'";
+
+			}
+			else
+			{
+				$query="INSERT INTO tfaculty (eid,other) VALUES ('$eid_eid','$oddetails')";
+				
+			}
+
+
+			if($conn->query($query)){
+		        echo "<script>
+					alert('Data updated successfully!!');				
+					window.location.href = 'index.php?eid=".$eid_eid."';
 				</script>";
-			}else{
+	        }else{
 				echo 
 				"<script>
 					alert('Error in data updation!!');				
-					window.location.href = 'index.php?eid=".$eid."';
+					window.location.href = 'index.php?eid=".$eid_eid."';
 				</script>";
 			}		
 		}
@@ -473,7 +523,6 @@
 		$target_file = $target_dir.$title.'.'.$ext;
 			
 		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-
 
 			$query = "INSERT INTO `post`(`title`,`contenttype`,`problem`,`description`,`eid`,`email`,`pdf`) VALUES('$title','$contenttype','$ps','$description','$eid_eid','$eid','Notes/$dbpath')";
 			

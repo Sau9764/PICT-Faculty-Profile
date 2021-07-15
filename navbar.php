@@ -48,11 +48,22 @@
               </ul>
 
               <ul class="nav navbar-nav ml-auto" style="float: right;">
-                <li class="mb-1 mr-3" style="">
-                    <div style="float: right; margin: 5px; color: white; background: #2d2d2d;" data-theme="dark" data-onsuccess="onSignIn" class="g-signin2"  id="SignIn" onclick="toggleClick()">
-                    <span class="buttonText">Google</span>
-                    </div>
-                </li>
+
+                <?php 
+                $curPageName = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
+                if($curPageName != 'view_faculty_profile.php'){
+                  ?>
+                    <li class="mb-1 mr-3" style="">
+                        <div style="float: right; margin: 5px; color: white; background: #2d2d2d;" data-theme="dark" data-onsuccess="onSignIn" class="g-signin2"  id="SignIn" onclick="toggleClick()">
+                        <span class="buttonText">Google</span>
+                        </div>
+                    </li>
+
+                  <?php
+                } 
+                ?>
+
+                
                 <li style="margin-top: 5px;">
                   <form action="contactFaculty/contactSearch.php" method="POST" class="form-inline">
                     <input type="text" class="form-control mr-2 ml-4" id="email" placeholder="Search Faculty" name="fname" onkeyup="showResult(this.value)">                

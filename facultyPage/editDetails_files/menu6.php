@@ -2,7 +2,7 @@
 	<div class="card mycard" id="patents" style="margin-bottom: 10px;">
 		<div class="card-header" align="center">
 			<h2>Patents Details
-				<span><button class="personalclick btn btn-primary" data-toggle="modal" data-target="#add_patent_model" style="margin: 5px;float: right;" onclick="editpersonal()">Add Patent</button></span>
+				<span><button class="personalclick btn btn-primary" data-toggle="modal" data-target="#add_patent_model" style="margin: 5px;float: right;">Add Patent</button></span>
 			</h2>
 		</div>
 

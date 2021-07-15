@@ -24,7 +24,7 @@
 		var editpersonalBTN = 0;
 		function editpersonal(){
 			editpersonalBTN = 1;
-			var x = document.getElementsByClassName("pdetails");
+			var x = document.getElementsByClassName("editable");
 			for(var i=0; i<x.length ; i++){
 				x[i].disabled = false;
 			}

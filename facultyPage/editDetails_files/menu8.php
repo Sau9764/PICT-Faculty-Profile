@@ -6,7 +6,7 @@
 					<h2>Funded Research Projects
 
 						<span>
-							<button class="personalclick btn btn-primary" data-toggle="modal" data-target="#add_fund_model" style="margin: 5px;float: right;" onclick="editpersonal()">
+							<button class="personalclick btn btn-primary" data-toggle="modal" data-target="#add_fund_model" style="margin: 5px;float: right;">
 								Add Research Project
 							</button>
 						</span>

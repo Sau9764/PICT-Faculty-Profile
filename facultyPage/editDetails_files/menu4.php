@@ -2,7 +2,7 @@
 	<div class="card mycard" id="journals" style="margin-bottom: 10px;">
 		<div class="card-header" align="center">
 			<h2>Journal Details
-				<span><button class="personalclick btn btn-primary ml-2" data-toggle="modal" data-target="#add_journal_model" style="float: right;" onclick="editpersonal()">Add Journal</button></span>
+				<span><button class="personalclick btn btn-primary ml-2" data-toggle="modal" data-target="#add_journal_model" style="float: right;">Add Journal</button></span>
 				
 			</h2>
 		</div>

@@ -3,7 +3,7 @@
 				<div class="card-header" align="center">
 					<h2>Conferences Details
 						<span>
-							<button class="personalclick btn btn-primary" data-toggle="modal" data-target="#add_conf_model" style="margin: 5px;float: right;" onclick="editpersonal()">
+							<button class="personalclick btn btn-primary" data-toggle="modal" data-target="#add_conf_model" style="margin: 5px;float: right;">
 								Add new
 							</button>
 						</span>
