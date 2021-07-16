@@ -127,21 +127,8 @@
         <!-- tables HOD -->
         <?php require('table_data/requests/profile_update_requests.php'); ?>
         <!-- table Conferences -->
-        <!-- <?php require('table_data/requests/conferences_update_request.php'); ?>
-
-        <?php require('table_data/requests/books_update_request.php'); ?>
-
-        <?php require('table_data/requests/consultancy_update_request.php'); ?>  
-
-        <?php require('table_data/requests/fundpr_update_request.php'); ?> 
-
-        <?php require('table_data/requests/journal_update_request.php'); ?> 
-
-        <?php require('table_data/requests/patent_update_request.php'); ?> 
-
-        <?php require('table_data/requests/quali_update_request.php'); ?> 
-
-        <?php require('table_data/requests/content_upload_request.php'); ?>  -->
+        
+        <!-- miss file 1 -->
 
       </div>
     </div>
@@ -153,21 +140,7 @@
 
     <?php require('models/faculty_models/view_request_details_model.php'); ?>
 
-    <!-- <?php require('models/faculty_models/conf_request_model.php'); ?>
-
-    <?php require('models/faculty_models/books_request_model.php'); ?>
-
-    <?php require('models/faculty_models/consultancy_request_model.php'); ?>
-
-    <?php require('models/faculty_models/fundpr_request_model.php'); ?>
-
-    <?php require('models/faculty_models/journal_request_model.php'); ?>
-
-    <?php require('models/faculty_models/patent_request_model.php'); ?>
-
-    <?php require('models/faculty_models/quali_request_model.php'); ?>
-
-    <?php require('models/faculty_models/content_request_model.php'); ?> -->
+   <!-- miss file 2 -->
 
     <script>
 

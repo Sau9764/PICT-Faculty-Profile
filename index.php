@@ -361,7 +361,7 @@
 
         <div class="footer">
           <div class="footer-text"> 
-            © 2019-2020 pict.edu, All rights reserved. <i class="fa fa-code" aria-hidden="true"></i> <a href="developer_model.php" class="dev_page">Developers.</a>
+            © 2019-2020 pict.edu, All rights reserved. 
           </div>
         </div>
 

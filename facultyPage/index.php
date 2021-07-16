@@ -5,7 +5,7 @@
 	$email=$_SESSION['email'];
 
 
-	$sql = "SELECT eid,image,email,fullname,contact,acontact,texperience,iexperience,doj,department,designation,responsibility,aoi,other,cv FROM faculty F WHERE F.email ='$email'";
+	$sql = "SELECT eid,image,email,fullname,contact,acontact,texperience,iexperience,doj,department,designation,responsibility,aoi,other,cv,enable FROM faculty F WHERE F.email ='$email'";
 
 	$run = $conn->query($sql);
 
@@ -29,9 +29,14 @@
 		$other = $row['other'];
 		$cv = $row['cv'];
 		$email = $row['email'];
+    $enable = $row['enable'];
 
 		
 	}
+
+  if($enable == 0){
+     echo "<script> alert('Please enable your account from Admin first.'); window.location.href='../index.php';</script>";
+  }
 	
 
 	

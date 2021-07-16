@@ -25,17 +25,66 @@
                   <input class="form-control input-lg" id="req_name" type="text" name="name">
                   <br>
 
-                   <label for="inputsm">Employee Contact</label>
-                  <input class="form-control input-lg" id="req_cont" type="text" name="conatct">
-                  <br>
-
                    <label for="inputsm">Employee Email</label>
                   <input class="form-control input-lg" id="req_email" type="text" name="email">
                   <br>
 
-                   <label for="inputsm">Employee Responsibility</label>
+                  <!-- new content -->
+
+                  <label for="inputsm">Image</label>
+                  <br>
+                  
+                  <a id="req_img" target="_blank" name="image">Click Here</a>
+                  <br>
+                  <br>
+
+                  <style type="text/css">
+                    #req_img:hover {
+                      color: #000;
+                    }
+                    #req_img:active {
+                      color: #000;
+                    }
+                  </style>
+
+                  <label for="inputsm">Teaching Experience</label>
+                  <input class="form-control input-lg" id="req_te" type="text" name="te">
+                  <br>
+
+                  <label for="inputsm">Industral Experience</label>
+                  <input class="form-control input-lg" id="req_ie" type="text" name="ie">
+                  <br>
+
+                  <label for="inputsm">Employee Responsibility</label>
                   <input class="form-control input-lg" id="req_res" type="text" name="resp">
                   <br>
+
+                  <label for="inputsm">Employee Contact</label>
+                  <input class="form-control input-lg" id="req_cont" type="text" name="conatct">
+                  <br>
+
+                  <label for="inputsm">Area Of Interest</label>
+                  <input class="form-control input-lg" id="req_aoi" type="text" name="aoi">
+                  <br>
+
+                  <label for="inputsm">Other Info.</label>
+                  <input class="form-control input-lg" id="req_other" type="text" name="other">
+                  <br>
+
+                  <label for="inputsm">CV</label>
+                  <br>
+                  <a id="req_cv" target="_blank" name="cv">Click Here</a>
+                  <br>
+                  <br>
+
+                  <style type="text/css">
+                    #req_cv:hover {
+                      color: #000;
+                    }
+                    #req_cv:active {
+                      color: #000;
+                    }
+                  </style>
 
                   <center>
                     <br>

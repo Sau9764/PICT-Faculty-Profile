@@ -46,9 +46,6 @@
 						</tr>
 					</table>
 				</div>
-				<div class="m-3" align="center">
-					<input type="submit" name="pdsubmit" value="Update" class="btn btn-success">
-				</div>
 			</form>
 		</div>
 	</div>

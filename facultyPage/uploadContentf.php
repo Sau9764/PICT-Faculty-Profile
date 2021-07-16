@@ -22,11 +22,13 @@
             
             $_SESSION['fullname']=$row['fullname']."";
             $_SESSION['eid']=$row['eid']."";
+            $_SESSION['dept'] = $row['department']."";
 
             }
        
         $fullname=$_SESSION['fullname'];
         $eid_eid=$_SESSION['eid'];
+        $dept = $_SESSION['dept'];
     }
 
 
@@ -72,6 +74,8 @@
 
 		
 
+		
+
 		if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], $target_file)) {
 
 			$sequery="select * from tfaculty where eid='$eid_eid'";
@@ -86,7 +90,7 @@
 			}
 			else
 			{
-				$query="INSERT INTO tfaculty (eid,image) VALUES ('$eid_eid','req_ImgCv/facultyImages/$dbpath')";
+				$query="INSERT INTO tfaculty (eid,image,department,fullname,email) VALUES ('$eid_eid','req_ImgCv/facultyImages/$dbpath', '$dept','$fullname','$eid')";
 				
 			}
 
@@ -104,25 +108,24 @@
 	// menu 1
 	if(isset($_POST['pdsubmit'])){
 
-		$row = $_SESSION['row'];
-		//$eid = $row["eid"];
-
-		$fullname = $row['fullname'];
 		$contact = $row['contact'];
-		$department = $row['department'];
-		$designation = $row['designation'];
 		$responsibility = $row['responsibility'];
 		
-		
 		$pdphone = $_POST['pdphone'];
-		
 		$pdresp = $_POST['pdresp'];
+
 		$change = 0;
 
-
 		if($pdphone!=""){
-			//$sql="insert into tfaculty (contact) VALUES ('$pdphone')";
-			$sql = "UPDATE tfaculty SET contact = '$pdphone' WHERE eid='$eid_eid'";
+
+			$sequery="select * from tfaculty where eid='$eid_eid'";
+			$result = $conn->query($sequery);
+			if ($result->num_rows > 0) {
+				$sql = "UPDATE tfaculty SET contact = '$pdphone' WHERE eid='$eid_eid'";
+			}else{
+				$sql="INSERT INTO tfaculty (eid,contact,department,fullname,email) VALUES ('$eid_eid','$pdphone', '$dept','$fullname','$eid')";
+			}
+
 			$query = $conn->query($sql);
 			if($query){
 				$change = 1;
@@ -133,6 +136,15 @@
 		}
 		
 		if($pdresp!=""){
+
+			$sequery="select * from tfaculty where eid='$eid_eid'";
+			$result = $conn->query($sequery);
+			if ($result->num_rows > 0) {
+				$sql = "UPDATE tfaculty SET responsibility = '$pdresp' WHERE eid='$eid_eid'";
+			}else{
+				$sql="INSERT INTO tfaculty (eid,responsibility,department,fullname,email) VALUES ('$eid_eid','$pdresp', '$dept','$fullname','$eid')";
+			}
+
 			$sql = "UPDATE tfaculty SET responsibility = '$pdresp' WHERE eid='$eid_eid'";
 			$query = $conn->query($sql);
 			if($query){
@@ -181,29 +193,20 @@
 	// menu 3
 	if(isset($_POST['exsubmit'])){
 
-	 	$row = $_SESSION['row'];
-
-	 	$aoi = $row['aoi'];
-		$texperience = $row['texperience'];
-		$iexperience = $row['iexperience'];
-		$other = $row['other'];
-
-		//$eid = $row['eid'];
 		$exaoi = $_POST['exaoi'];
 		$extexperience = $_POST['extexperience'];
 		$exiexperience = $_POST['exiexperience'];
 
 		$change = 0;
 
-
-		$sql = "SELECT * FROM faculty WHERE eid = '$eid_eid'";
+		$sql = "SELECT * FROM tfaculty WHERE eid = '$eid_eid'";
     	$result = $conn->query($sql);
 
     	if($result->num_rows<=0)
     	{
-    		$sql="INSERT INTO tfaculty(eid,texperience,iexperience,aoi,other) VALUES ('e$id_eid','$texperience','$iexperience','$aoi','other') ";
+    		$sql="INSERT INTO tfaculty(eid,texperience,iexperience,aoi,fullname,department,email) VALUES ('$eid_eid','$extexperience','$exiexperience','$exaoi','$fullname', '$dept', '$eid') ";
 
-    		if($conn->query($query)){
+    		if($conn->query($sql)){
 		        echo "<script>alert('Experience uploaded!!');
 	        		window.location.href = 'index.php?eid=".$eid_eid."';</script>";
 	        }
@@ -417,7 +420,7 @@
 			}
 			else
 			{
-				$query="INSERT INTO tfaculty (eid,cv) VALUES ('$eid_eid','req_ImgCv/facultyCv/$dbpath')";
+				$query="INSERT INTO tfaculty (eid,fullname,department,email,cv) VALUES ('$eid_eid','$fullname','$dept', '$eid','req_ImgCv/facultyCv/$dbpath')";
 				
 			}
 
@@ -486,7 +489,7 @@
 			}
 			else
 			{
-				$query="INSERT INTO tfaculty (eid,other) VALUES ('$eid_eid','$oddetails')";
+				$query="INSERT INTO tfaculty (eid,other,fullname,department,email) VALUES ('$eid_eid','$oddetails','$fullname','$dept','$eid')";
 				
 			}
 

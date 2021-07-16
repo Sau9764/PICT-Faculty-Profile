@@ -370,7 +370,7 @@
 
 		$emp_id =  $_POST['emp_id'];
 
-		$query = "DELETE FROM admin WHERE emp_id = '$emp_id'";
+		$query = "DELETE FROM admin WHERE emp_id = '$emp_id' and dept = '$dept";
 		$result = $conn->query($query);
 		if ($result) {
 			echo '<script type="text/javascript">alert("Data Deleted Successfully!");window.location.href="master_admin.php";</script>';
@@ -466,25 +466,139 @@
 	if(isset($_POST['approve'])){
 		
 		$e_id =  $_POST['eid'];
-		$name =  $_POST['name'];
-		$conatct =  $_POST['conatct'];
-		$email =  $_POST['email'];
-		$resp =  $_POST['resp'];
 
-		$query1 = "DELETE FROM tfaculty WHERE eid = '$e_id'";
-		$result1 = $conn->query($query1);
-		if ($result1) {
-			$query2 = "UPDATE faculty SET contact = '$conatct', responsibility = '$resp' WHERE eid = '$e_id'";
-			$result2 = $conn->query($query2);
-			if($result2){
-				echo '<script type="text/javascript">alert("Data Updated Successfully!"); window.location.href="request_data_change.php";</script>';
-			}else{
-				echo '<script type="text/javascript">alert("Data Not Updated!"); window.location.href="request_data_change.php";</script>';
-			}
-			
-		}else{
-			echo '<script type="text/javascript">alert("Error while Deleting details.");window.location.href="request_data_change.php";</script>';
-		}
+		$sql = "SELECT image,texperience,iexperience,responsibility,contact,aoi,other,cv FROM tfaculty WHERE eid = '$e_id'";
+
+	    $personal_data = array();
+	    $result = $conn->query($sql);
+
+	    if($row = $result->fetch_assoc()){
+
+	        $personal_data[0] = $row['image'];	        
+	        $personal_data[1] = $row['texperience'];
+	        $personal_data[2] = $row['iexperience'];
+	        $personal_data[3] = $row['responsibility'];
+	        $personal_data[4] = $row['contact'];
+	        $personal_data[5] = $row['aoi'];
+	        $personal_data[6] = $row['other'];
+	        $personal_data[7] = $row['cv'];
+	       
+	    }
+
+	    // for($i = 0; $i < 7; $i++){
+	    // 	echo $personal_data[$i];
+	    // }
+
+	    if($personal_data[0] != ""){
+
+	    	// move image
+	    	// change db path
+
+	    	$image_name = array();
+
+	    	$image_name = explode("/", $personal_data[0]);
+	    	$size = sizeof($image_name);
+
+	    	$source =  dirname(__DIR__) . "\\facultyPage\\req_ImgCv\\facultyImages\\".$image_name[$size-1];
+	    	$desti = dirname(__DIR__) . "\\facultyPage\\facultyImages\\".$image_name[$size-1];
+
+
+	    	if(file_exists($desti)){
+				unlink($desti);
+				 echo '<script type="text/javascript">alert("File deleted!"); </script>'; 
+		  	}
+
+		   	if(!copy($source, $desti) ) { 
+			    echo '<script type="text/javascript">alert("Cannot copy the file!"); window.location.href="request_data_change.php";</script>'; 
+			 } 
+			 else { 
+		      if(file_exists($source)){
+			 	unlink($source);
+			   }
+			 } 
+
+	    }
+
+	     if($personal_data[1] != ""){
+
+	     	// Update 
+	    	$sql = "UPDATE faculty SET texperience = '$personal_data[1]' WHERE eid='$e_id'";
+		 	$query = $conn->query($sql);
+
+	    }
+	    if($personal_data[2] != ""){
+
+	     	// Update 
+	     	$sql = "UPDATE faculty SET iexperience = '$personal_data[2]' WHERE eid='$e_id'";
+		 	$query = $conn->query($sql);
+	    	
+	     }
+	     if($personal_data[3] != ""){
+
+	     	// Update 
+	     	$sql = "UPDATE faculty SET responsibility = '$personal_data[3]' WHERE eid='$e_id'";
+		 	$query = $conn->query($sql);
+	    	
+	     }
+	     if($personal_data[4] != ""){
+
+	     	// Update 
+	     	$sql = "UPDATE faculty SET contact = '$personal_data[4]' WHERE eid='$e_id'";
+		 	$query = $conn->query($sql);
+	    	
+	     }
+	     if($personal_data[5] != ""){
+
+	     	// Update 
+	     	$sql = "UPDATE faculty SET aoi = '$personal_data[5]' WHERE eid='$e_id'";
+		 	$query = $conn->query($sql);
+	    	
+	     }
+	     if($personal_data[6] != ""){
+
+	     	// Update 
+	     	$sql = "UPDATE faculty SET other = '$personal_data[6]' WHERE eid='$e_id'";
+		 	$query = $conn->query($sql);
+	    	
+	     }
+	     if($personal_data[7] != ""){
+
+	     	// Move cv 
+	     	// Change db path
+
+	     	$cv_name = array();
+
+	    	$cv_name = explode("/", $personal_data[7]);
+	    	$size = sizeof($cv_name);
+
+	    	$source =  dirname(__DIR__) . "\\facultyPage\\req_ImgCv\\facultyCv\\".$cv_name[$size-1];
+	    	$desti = dirname(__DIR__) . "\\facultyPage\\facultyCV\\".$cv_name[$size-1];
+
+	    	if(file_exists($desti)){
+				unlink($desti);
+				 echo '<script type="text/javascript">alert("File deleted!"); </script>'; 
+		  	}
+
+		   	if(!copy($source, $desti) ) { 
+			    echo '<script type="text/javascript">alert("Cannot copy the file!"); window.location.href="request_data_change.php";</script>'; 
+			 } 
+			 else { 
+		      if(file_exists($source)){
+			 	unlink($source);
+			   }
+			 } 
+	    	
+	     }
+
+		 // Final delete all temp
+		 $query1 = "DELETE FROM tfaculty WHERE eid = '$e_id'";
+		 $result1 = $conn->query($query1);
+		 if ($result1) {
+		 	echo '<script type="text/javascript">alert("Data Updated Successfully!"); window.location.href="request_data_change.php";</script>';
+		 }else{
+		 	echo '<script type="text/javascript">alert("Error while Deleting details.");window.location.href="request_data_change.php";</script>';
+		 }
+
 	}
 
 	// if(isset($_POST['approve_conf'])){
